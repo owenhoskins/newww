@@ -26,11 +26,24 @@
 		return el;
 	}
 
-	function init() {
+	function fillAll() {
 		var elements = document.querySelectorAll('.jtextfill');
 		elements.forEach(function (el) {
 			textFill(el, { maxFontPixels: 660 });
 		});
+	}
+
+	function debounce(fn, waitMs) {
+		var timeoutId;
+		return function () {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(fn, waitMs);
+		};
+	}
+
+	function init() {
+		fillAll();
+		window.addEventListener('resize', debounce(fillAll, 150));
 	}
 
 	if (document.readyState === 'loading') {
